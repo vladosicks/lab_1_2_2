@@ -1,0 +1,29 @@
+from datetime import date
+
+class Person:
+    def __init__(self, surname, first_name, birth_date, nickname=None):
+        self.surname = surname
+        self.first_name = first_name
+        self.nickname = nickname
+        self.birth_date = birth_date
+
+    def get_age(self, reference_date=None):
+        if reference_date is None:
+            reference_date = date.today()
+        age = reference_date.year - self.birth_date.year - ((reference_date.month, reference_date.day) < (self.birth_date.month, self.birth_date.day))
+        return str(age)
+
+    def get_fullname(self):
+        if self.nickname:
+            return f"{self.surname} {self.first_name} '{self.nickname}'"
+        else:
+            return f"{self.surname} {self.first_name}"
+
+# Приклад використання класу Person
+if __name__ == "__main__":
+    birthdate = date(2003, 5, 26)
+    person1 = Person("Doe", "John", birthdate)
+    person2 = Person("Protsenko", "Vladislav", birthdate, "S")
+
+    print(person1.get_age())  # Виведе вік на сьогоднішню дату
+    print(person2.get_fullname())  # Виведе "Smith Jane 'J'"
