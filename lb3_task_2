@@ -1,0 +1,43 @@
+from datetime import date
+
+class Person:
+    def __init__(self, surname, first_name, birth_date, nickname=None):
+        self.surname = surname
+        self.first_name = first_name
+        self.nickname = nickname
+        self.birth_date = birth_date
+
+    def get_age(self, reference_date=None):
+        if reference_date is None:
+            reference_date = date.today()
+        age = reference_date.year - self.birth_date.year - ((reference_date.month, reference_date.day) < (self.birth_date.month, self.birth_date.day))
+        return str(age)
+
+    def get_fullname(self):
+        if self.nickname:
+            return f"{self.surname} {self.first_name} '{self.nickname}'"
+        else:
+            return f"{self.surname} {self.first_name}"
+
+def modifier(filename):
+    # Читаємо дані з файлу і створюємо об'єкти Person
+    persons = []
+    with open(filename, 'r') as file:
+        for line in file:
+            surname, first_name, birth_date_str, nickname = line.strip().split(',')
+            year, month, day = map(int, birth_date_str.split('-'))
+            birth_date = date(year, month, day)
+            person = Person(surname, first_name, birth_date, nickname)
+            persons.append(person)
+    with open(filename, 'a') as file:
+        file.write('\n')
+        file.write("Fullname,Age\n")  # Додаємо заголовок нових граф
+        for person in persons:
+            fullname = person.get_fullname()
+            age = person.get_age()
+            file.write(f"{fullname},{age}\n")
+
+# Приклад використання функції modifier
+if __name__ == "__main__":
+    filename = "contacts.txt"
+    modifier(filename)
