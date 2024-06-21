@@ -1,0 +1,29 @@
+class Car:
+    def __init__(self, brand, model, year):
+        self.brand = brand
+        self.model = model
+        self.year = year
+        self.speed = 0
+
+    def accelerate(self):
+        self.speed += 5
+
+    def brake(self):
+        if self.speed >= 5:
+            self.speed -= 5
+
+    def get_speed(self):
+        return self.speed
+
+# Створення об'єкта класу Car
+car = Car("Toyota", "Camry", 2022)
+
+# Виклик методу accelerate п’ять разів та виведення поточної швидкості
+for _ in range(5):
+    car.accelerate()
+    print("Швидкість після прискорення:", car.get_speed())
+
+# Виклик методу brake п’ять разів та виведення поточної швидкості
+for _ in range(5):
+    car.brake()
+    print("Швидкість після гальмування:", car.get_speed())
