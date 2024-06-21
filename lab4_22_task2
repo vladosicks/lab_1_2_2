@@ -1,0 +1,21 @@
+class Buffer:
+    def __init__(self):
+        self.sequence = []
+
+    def add(self, *a):
+        self.sequence.extend(a)
+        while len(self.sequence) >= 5:
+            chunk = self.sequence[:5]
+            print("Сума п’ятірки:", sum(chunk))
+            self.sequence = self.sequence[5:]
+
+    def get_current_part(self):
+        return self.sequence
+
+# Приклад використання класу Buffer
+buffer = Buffer()
+buffer.add(1, 2, 3)
+buffer.add(4, 5, 6, 7, 8, 9)
+print("Збережені елементи:", buffer.get_current_part())
+buffer.add(10, 11)
+print("Збережені елементи:", buffer.get_current_part())
